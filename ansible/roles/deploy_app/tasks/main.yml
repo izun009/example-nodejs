@@ -26,6 +26,8 @@
 
 - name: Start/deploy app with pm2
   command: pm2 start app.js --name app
+  args:
+    chdir: /home/ubuntu/app
   become_user: ubuntu
 
 - name: Save pm2 state/process list
