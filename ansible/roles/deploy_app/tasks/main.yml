@@ -21,6 +21,7 @@
 
 - name: Redeploy/Stop if exist
   command: pm2 delete app
+  ignore_errors: yes
   become_user: ubuntu
 
 - name: Start/deploy app with pm2
