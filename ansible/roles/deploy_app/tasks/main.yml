@@ -31,5 +31,5 @@
   become_user: ubuntu
 
 - name: Save pm2 state/process list
-  command: pm2 Save
+  command: pm2 save
   become_user: ubuntu
