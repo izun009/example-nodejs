@@ -1,0 +1,5 @@
+- name: Ansible playbook
+  hosts: app_servers
+  become: true
+  roles:
+    - runtime

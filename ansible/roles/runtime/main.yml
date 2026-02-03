@@ -1,0 +1,35 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install base package
+  apt:
+    name:
+      - curl
+      - git
+      - wget
+    state: present
+
+- name: Install node.js v22
+  shell: |
+    curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+    apt-get install -y nodejs
+  args:
+    creates: /usr/bin/node
+
+- name: Verify nodejs version
+  command: node -v
+  register: node_version
+
+- name: Install pm2 startup for Ubuntu
+  npm:
+    name: pm2
+    global: yes
+
+- name: Service for pm2
+  shell: |
+    pm2 startup systemd -u ubuntu --hp /home/ubuntu
+  args:
+    creates: /etc/systemd/system/pm2-ubuntu.service

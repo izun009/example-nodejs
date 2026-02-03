@@ -1,0 +1,32 @@
+- name: Project Directory
+  file:
+    path: /home/ubuntu/app
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+
+- name: Clone application repo
+  git:
+    repo: git@github.com:izun009/example-nodejs.git
+    dest: /home/ubuntu/app
+    version: main
+    force: yes
+  become_user: ubuntu
+
+- name: Install npm dependencies
+  command: npm install
+  args: 
+    chdir: /home/ubuntu/app
+  become_user: ubuntu
+
+- name: Redeploy/Stop if exist
+  command: pm2 delete app
+  become_user: ubuntu
+
+- name: Start/deploy app with pm2
+  command: pm2 start app.js --name app
+  become_user: ubuntu
+
+- name: Save pm2 state/process list
+  command: pm2 Save
+  become_user: ubuntu
