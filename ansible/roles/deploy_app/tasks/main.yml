@@ -7,7 +7,7 @@
 
 - name: Clone application repo
   git:
-    repo: git@github.com:izun009/example-nodejs.git
+    repo: https://github.com/izun009/example-nodejs.git
     dest: /home/ubuntu/app
     version: main
     force: yes
